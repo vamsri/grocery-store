@@ -5,9 +5,17 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // Automatically
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // Extract CSS into separate files
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin'); // Optimize and minify CSS
 const TerserPlugin = require('terser-webpack-plugin'); // Minify JavaScript
+const ESLintPlugin = require('eslint-webpack-plugin');
+
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 module.exports = (env, argv) => {
     const isProduction = argv.mode === 'production';
+
+    const envPath = isProduction ? './.env.production' : './.env.local';
+    dotenv.config({ path: envPath });
 
     return {
         entry: './src/index.js', // Your entry point
@@ -32,7 +40,20 @@ module.exports = (env, argv) => {
                 },
                 {
                     test: /\.css$/,
-                    use: [isProduction ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader'],
+                    use: [
+                        isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+                        'css-loader',
+                        'postcss-loader', // Add PostCSS loader
+                    ],
+                },
+                {
+                    test: /\.(scss|sass)$/,
+                    use: [
+                        isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+                        'css-loader',
+                        'postcss-loader', // Ensure PostCSS is applied to SASS/SCSS files as well
+                        'sass-loader', // Compiles Sass to CSS
+                    ],
                 },
             ],
         },
@@ -46,23 +67,33 @@ module.exports = (env, argv) => {
             isProduction && new MiniCssExtractPlugin({
                 filename: '[name].[contenthash].css',
             }),
+            new webpack.DefinePlugin({
+                'process.env': JSON.stringify(process.env)
+            }),
+            new ESLintPlugin({
+                context: 'src',
+                files: '**/*.js',
+                exclude: 'node_modules',
+                fix: true, // Automatically fix some issues
+                cache: true, // Enable caching for faster rebuilds
+            }),
         ].filter(Boolean),
         optimization: {
             minimize: isProduction,
             minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
             splitChunks: {
-                chunks: 'all', // Enable splitting for all chunks
+                chunks: 'all',
             },
         },
         devServer: {
             static: {
-                directory: path.join(__dirname, 'dist'), // Update from 'contentBase' to 'static.directory'
+                directory: path.join(__dirname, 'dist'),
             },
-            hot: true, // Enable HMR
-            historyApiFallback: true, // Useful for single-page applications
-            open: true, // Automatically open the browser
-            compress: true, // Enable gzip compression
-            port: 3000, // Specify the port
+            hot: true,
+            historyApiFallback: true,
+            open: true,
+            compress: true,
+            port: 3000,
             https: false,
         },
     }
