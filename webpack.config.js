@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // Extract CSS 
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin'); // Optimize and minify CSS
 const TerserPlugin = require('terser-webpack-plugin'); // Minify JavaScript
 const ESLintPlugin = require('eslint-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const dotenv = require('dotenv');
 
@@ -54,6 +55,18 @@ module.exports = (env, argv) => {
                         'postcss-loader', // Ensure PostCSS is applied to SASS/SCSS files as well
                         'sass-loader', // Compiles Sass to CSS
                     ],
+                },
+                {
+                    test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                    type: 'asset/resource',
+                },
+                {
+                    test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                    type: 'asset/resource',
+                },
+                {
+                    test: /\.svg$/,
+                    use: ['@svgr/webpack'],
                 },
             ],
         },
