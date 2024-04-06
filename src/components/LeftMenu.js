@@ -47,7 +47,7 @@ export default function LeftMenu() {
     },
     {
       name: 'Products',
-      href: '/products',
+      href: '/product',
       icon: UsersIcon,
       current: currentNavItem === 2,
     },
@@ -59,8 +59,8 @@ export default function LeftMenu() {
       current: currentNavItem === 3,
     },
     {
-      name: 'Documents',
-      href: '/documents',
+      name: 'Document',
+      href: '/document',
       icon: DocumentDuplicateIcon,
       current: currentNavItem === 4,
     },
