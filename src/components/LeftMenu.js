@@ -2,6 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { onLogout } from '../features/auth/authSlice';
 
 import {
   CalendarIcon,
@@ -18,6 +20,7 @@ function classNames(...classes) {
 
 export default function LeftMenu() {
   const [currentNavItem, setCurrentNavItem] = useState(0);
+  const dispatch = useDispatch(); 
 
   // Add this code to update currentNavItem based on active link
   useEffect(() => {
@@ -29,6 +32,11 @@ export default function LeftMenu() {
       setCurrentNavItem(activeNavItem);
     }
   }, []);
+
+  const handleLogout = () => {
+    dispatch(onLogout());
+    localStorage.setItem('token', '');
+  };
 
   const navigation = [
     {
@@ -146,8 +154,15 @@ export default function LeftMenu() {
                   </Link>
                 </li>
               ))}
-            </ul>
+            </ul>            
           </li>
+          <button
+            type="button"
+            className="rounded bg-white/10 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-white/20"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
           <li className="-mx-6 mt-auto">
             <a
               href="#"
@@ -159,7 +174,7 @@ export default function LeftMenu() {
                 alt=""
               />
               <span className="sr-only">Your profile</span>
-              <span aria-hidden="true">Tom Cook</span>
+              <span aria-hidden="true">Vamsi Vangari</span>
             </a>
           </li>
         </ul>

@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import RootLayout from '../components/RootLayout';
+import RootLayout from './RootLayout';
 import CategoryComponent from '../components/CategoryComponent';
 
 function Category() {

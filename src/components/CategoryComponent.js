@@ -6,6 +6,7 @@ import 'ag-grid-community/styles/ag-grid.css'; // Mandatory CSS required by the 
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // Optional Theme applied to the grid
 
 const CategoryForm = () => {
+  const [tenantId, setTenantId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [categories, setCategories] = useState([]);
@@ -44,10 +45,12 @@ const CategoryForm = () => {
 
   const getCategories = () => {
     axios
-      .get('http://localhost:4001/categories')
+      .get('http://localhost:4001/api/categories')
       .then((response) => {
         console.log('data->', response.data);
-        setCategories(response.data);
+        if (response.data) {
+          setCategories(response.data);
+        }
       })
       .catch((err) => {
         console.log('err->', err);
@@ -62,7 +65,8 @@ const CategoryForm = () => {
     e.preventDefault();
 
     // Extract name and description from event
-    const { name, description } = e.target.elements;
+    const { tenant, name, description } = e.target.elements;
+    const tenantId = tenant.value
     const nameValue = name.value;
     const descriptionValue = description.value;
 
@@ -71,7 +75,8 @@ const CategoryForm = () => {
 
     // Make the POST request using Axios
     axios
-      .post('http://localhost:4001/categories', {
+      .post('http://localhost:4001/api/categories', {
+        tenantId: tenantId,
         name: nameValue,
         description: descriptionValue,
       })
@@ -90,6 +95,19 @@ const CategoryForm = () => {
   return (
     <div className="p-4 w-full h-screen flex flex-col">
       <form onSubmit={handleSubmit} className="w-full h-2/5 space-y-4">
+      <div>
+          <label htmlFor="name" className="block font-medium text-gray-700">
+            Tenant ID
+          </label>
+          <input
+            type="text"
+            id="tenant"
+            value={tenantId}
+            onChange={(e) => setTenantId(e.target.value)}
+            className="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            autocomplete="off"
+          />
+        </div>
         <div>
           <label htmlFor="name" className="block font-medium text-gray-700">
             Name

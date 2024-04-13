@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import LeftMenu from './LeftMenu';
+import LeftMenu from '../components/LeftMenu';
 
 export default function RootLayout({ children }) {
   return (

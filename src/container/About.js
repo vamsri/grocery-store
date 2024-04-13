@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import UserComponent from '../components/UserComponent';
-import RootLayout from '../components/RootLayout';
+import RootLayout from './RootLayout';
 
 function About() {
   return (

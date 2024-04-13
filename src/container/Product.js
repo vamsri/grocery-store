@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import RootLayout from '../components/RootLayout';
+import RootLayout from './RootLayout';
 import ProductComponent from '../components/ProductComponent';
 
 function Product() {
