@@ -18,6 +18,7 @@ import About from './container/About';
 import NotFound from './container/NotFound';
 import Register from './container/Register';
 import Login from './container/Login';
+import UserView from './container/UserView';
 // import Dashboard from './Dashboard';
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
     <Router>
       <div>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<UserView />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<PrivateRoute isAuthenticated={isAuthenticated} />}>

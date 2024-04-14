@@ -11,7 +11,8 @@ function Login() {
     const navigate = useNavigate(); // Hook for navigation
     const [credentials, setCredentials] = useState({
         email: '',
-        password: ''
+        password: '',
+        "domain": "www.store.com"
     });
     const [error, setError] = useState('');
 

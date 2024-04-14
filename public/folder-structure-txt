@@ -1,0 +1,47 @@
+images/
+│
+├── categories/
+│   ├── fruits_vegetables/
+│   │   ├── category_image.jpg
+│   │   ├── subcategories/
+│   │   │   ├── fresh_fruits/
+│   │   │   │   ├── subcategory_image.jpg
+│   │   │   ├── fresh_vegetables/
+│   │   │   │   ├── subcategory_image.jpg
+│   │
+│   ├── meat_seafood/
+│   │   ├── category_image.jpg
+│   │   ├── subcategories/
+│   │   │   ├── fresh_meats/
+│   │   │   │   ├── subcategory_image.jpg
+│   │   │   ├── seafood/
+│   │   │   │   ├── subcategory_image.jpg
+│
+├── products/
+    ├── fruits_vegetables/
+    │   ├── fresh_fruits/
+    │   │   ├── apple/
+    │   │   │   ├── apple_product1_front.jpg
+    │   │   │   ├── apple_product1_back.jpg
+    │   │   ├── orange/
+    │   │   │   ├── orange_product1_front.jpg
+    │   │   │   ├── orange_product1_back.jpg
+    │   │
+    │   ├── fresh_vegetables/
+    │   │   ├── carrot/
+    │   │   │   ├── carrot_product1_front.jpg
+    │   │   │   ├── carrot_product1_back.jpg
+    │
+    ├── meat_seafood/
+    │   ├── fresh_meats/
+    │   │   ├── beef/
+    │   │   │   ├── beef_product1_front.jpg
+    │   │   │   ├── beef_product1_back.jpg
+    │   │   ├── pork/
+    │   │   │   ├── pork_product1_front.jpg
+    │   │   │   ├── pork_product1_back.jpg
+    │   │
+    │   ├── seafood/
+    │   │   ├── salmon/
+    │   │   │   ├── salmon_product1_front.jpg
+    │   │   │   ├── salmon_product1_back.jpg

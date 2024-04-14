@@ -104,8 +104,8 @@ export default function LeftMenu() {
                   onClick={() => setCurrentNavItem(index)}
                   className={classNames(
                     item.current
-                      ? 'bg-indigo-700 text-white'
-                      : 'text-indigo-200 hover:text-white hover:bg-indigo-700',
+                      ? 'bg-red-400 text-white'
+                      : 'text-indigo-200 hover:text-white hover:bg-red-400',
                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                   )}
                 >
@@ -121,7 +121,7 @@ export default function LeftMenu() {
                   {item.name}
                   {item.count ? (
                     <span
-                      className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-indigo-600 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white ring-1 ring-inset ring-indigo-500"
+                      className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-red-400 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white ring-1 ring-inset ring-indigo-500"
                       aria-hidden="true"
                     >
                       {item.count}
@@ -142,12 +142,12 @@ export default function LeftMenu() {
                     to={team.href}
                     className={classNames(
                       team.current
-                        ? 'bg-indigo-700 text-white'
-                        : 'text-indigo-200 hover:text-white hover:bg-indigo-700',
+                        ? 'bg-red-400 text-white'
+                        : 'text-indigo-200 hover:text-white hover:bg-red-400',
                       'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                     )}
                   >
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-red-400 text-[0.625rem] font-medium text-white">
                       {team.initial}
                     </span>
                     <span className="truncate">{team.name}</span>
@@ -156,21 +156,15 @@ export default function LeftMenu() {
               ))}
             </ul>            
           </li>
-          <button
-            type="button"
-            className="rounded bg-white/10 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-white/20"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
+         
           <li className="-mx-6 mt-auto">
             <a
               href="#"
-              className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-indigo-700"
+              className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-red-400"
             >
               <img
-                className="h-8 w-8 rounded-full bg-indigo-700"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                className="h-8 w-8 rounded-full bg-red-400"
+                src="https://res.cloudinary.com/dwnik4k9e/image/upload/v1713075930/samples/pyugab3qdtd1vwuxp3vm.png"
                 alt=""
               />
               <span className="sr-only">Your profile</span>
@@ -178,7 +172,15 @@ export default function LeftMenu() {
             </a>
           </li>
         </ul>
+        
       </nav>
+      <button
+            type="button"
+            className="rounded bg-white/10 px-2 py-2 text-xs font-semibold text-white shadow-sm hover:bg-white/20"
+            onClick={handleLogout}
+          >
+        Logout
+      </button>
     </div>
   );
 }
