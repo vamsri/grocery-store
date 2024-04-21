@@ -16,6 +16,11 @@ module.exports = (env, argv) => {
     const envPath = isProduction ? './.env.production' : './.env.local';
     dotenv.config({ path: envPath });
 
+    const plugins = [];
+    if (!isProduction) {
+        plugins.push('react-refresh/babel');
+    }
+
     return {
         entry: './src/index.js', // Your entry point
         output: {
@@ -33,7 +38,7 @@ module.exports = (env, argv) => {
                         loader: 'babel-loader',
                         options: {
                             presets: ['@babel/preset-env', '@babel/preset-react'],
-                            plugins: ['react-refresh/babel'].filter(Boolean), // Enable React Refresh Babel plugin
+                            plugins: plugins, // Enable React Refresh Babel plugin
                         },
                     },
                 },
@@ -72,12 +77,11 @@ module.exports = (env, argv) => {
             new HtmlWebpackPlugin({
                 template: './public/index.html', // Path to your HTML template
             }),
-            new webpack.HotModuleReplacementPlugin(), // Enable HMR
-            new ReactRefreshWebpackPlugin(), // Add this line
+            !isProduction && new webpack.HotModuleReplacementPlugin(), // Enable HMR
             new CleanWebpackPlugin(),
-            isProduction && new MiniCssExtractPlugin({
+            isProduction ? new MiniCssExtractPlugin({
                 filename: '[name].[contenthash].css',
-            }),
+            }) : new ReactRefreshWebpackPlugin(),
             new webpack.DefinePlugin({
                 'process.env': JSON.stringify(process.env)
             }),

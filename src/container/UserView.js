@@ -45,24 +45,24 @@ function Sample() {
     ]
     return (
         <div className="grid gap-1 m-2">
-                        <div className="h-100 bg-slate-200">Row 2</div>
+            <div className="h-100 bg-slate-200">Row 2</div>
 
-            <div className="relative h-540 ">
+            <div className="relative h-840 w-full">
                 <div ref={scrollContainer} className="w-full h-full flex overflow-hidden">
                     <img
-                        className="w-full h-full object-cover object-center"
+                        className="w-full h-full object-cover"
                         src="https://res.cloudinary.com/dwnik4k9e/image/upload/v1708341618/samples/landscapes/beach-boat.jpg"
                     />
                     <img
-                        className="w-full h-full object-cover object-center"
+                        className="w-full h-full object-cover"
                         src="https://res.cloudinary.com/dwnik4k9e/image/upload/v1708341612/samples/food/fish-vegetables.jpg"
                     />
                     <img
-                        className="w-full h-full object-cover object-center"
+                        className="w-full h-full object-cover"
                         src="https://res.cloudinary.com/dwnik4k9e/image/upload/v1708341618/samples/landscapes/beach-boat.jpg"
                     />
                     <img
-                        className="w-full h-full object-cover object-center"
+                        className="w-full h-full object-cover"
                         src="https://res.cloudinary.com/dwnik4k9e/image/upload/v1708341612/samples/food/fish-vegetables.jpg"
                     />
                 </div>
