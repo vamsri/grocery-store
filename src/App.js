@@ -34,7 +34,7 @@ function App() {
           <Route path="/" element={<UserView />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/" element={<PrivateRoute isAuthenticated={!isAuthenticated} />}>
+          <Route path="/" element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
             <Route path="/dashboard" element={<Home />} />
             <Route path="/category" element={<Category />} />
             <Route path="/product" element={<Product />} />

@@ -44,8 +44,15 @@ const CategoryForm = () => {
   }, []);
 
   const getCategories = () => {
+    const token = localStorage.getItem('token');
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+      'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',
+      'Content-Type': 'application/json'
+    };
+
     axios
-      .get('http://localhost:4001/api/categories')
+      .get('http://localhost:4001/api/categories', {headers})
       .then((response) => {
         console.log('data->', response.data);
         if (response.data) {
@@ -65,21 +72,25 @@ const CategoryForm = () => {
     e.preventDefault();
 
     // Extract name and description from event
-    const { tenant, name, description } = e.target.elements;
-    const tenantId = tenant.value
+    const { name, description } = e.target.elements;
     const nameValue = name.value;
     const descriptionValue = description.value;
+
+    const token = localStorage.getItem('token');
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    };
 
     // Handle form submission logic here
     console.log('Form submitted:', nameValue, descriptionValue);
 
     // Make the POST request using Axios
     axios
-      .post('http://localhost:4001/api/categories', {
-        tenantId: tenantId,
+      .post('http://localhost:4001/api/categories',  {
+        domain: 'www.abc.store.com',
         name: nameValue,
         description: descriptionValue,
-      })
+      }, {headers})
       .then((response) => {
         // Handle the response
         console.log('Response:', response.data);
@@ -95,7 +106,7 @@ const CategoryForm = () => {
   return (
     <div className="p-4 w-full h-screen flex flex-col">
       <form onSubmit={handleSubmit} className="w-full h-2/5 space-y-4">
-      <div>
+      {/* <div>
           <label htmlFor="name" className="block font-medium text-gray-700">
             Tenant ID
           </label>
@@ -107,7 +118,7 @@ const CategoryForm = () => {
             className="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             autocomplete="off"
           />
-        </div>
+        </div> */}
         <div>
           <label htmlFor="name" className="block font-medium text-gray-700">
             Name
