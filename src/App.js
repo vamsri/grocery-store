@@ -19,6 +19,8 @@ import NotFound from './container/NotFound';
 import Register from './container/Register';
 import Login from './container/Login';
 import UserView from './container/UserView';
+import ImageUpload from './components/ImageUpload';
+import CategoryImage from './container/CategoryImage';
 // import Dashboard from './Dashboard';
 
 function App() {
@@ -37,6 +39,7 @@ function App() {
           <Route path="/" element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
             <Route path="/dashboard" element={<Home />} />
             <Route path="/category" element={<Category />} />
+            <Route path="/category/:id" element={<CategoryImage />} />
             <Route path="/product" element={<Product />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/document" element={<Document />} />

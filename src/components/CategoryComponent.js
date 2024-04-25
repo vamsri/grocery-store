@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
+import { useNavigate } from 'react-router-dom';
 import 'ag-grid-community/styles/ag-grid.css'; // Mandatory CSS required by the grid
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // Optional Theme applied to the grid
 
 const CategoryForm = () => {
+  const navigate = useNavigate();  // Replace useHistory with useNavigate
   const [tenantId, setTenantId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -19,6 +21,9 @@ const CategoryForm = () => {
       const idToDelete = params.data.id;
       setCategories(categories.filter((row) => row.id !== idToDelete));
     };
+    const uploadImage = (params) => {
+      console.log('params->', params);
+    }
     setColDefs([
       { field: '_id', flex: 1 },
       { field: 'name', flex: 1 },
@@ -39,7 +44,9 @@ const CategoryForm = () => {
         sortable: false,
         filter: false,
       },
+    
     ]);
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -103,6 +110,11 @@ const CategoryForm = () => {
       });
   };
 
+  const onRowClicked = (event) => {
+    console.log('event->', event)
+    navigate(`/category/${event.data._id}`); 
+  };
+
   return (
     <div className="p-4 w-full h-screen flex flex-col">
       <form onSubmit={handleSubmit} className="w-full h-2/5 space-y-4">
@@ -161,7 +173,11 @@ const CategoryForm = () => {
             className="ag-theme-quartz" // applying the grid theme
             style={{ height: '100%' }} // the grid will fill the size of the parent container
           >
-            <AgGridReact rowData={categories} columnDefs={colDefs} />
+            <AgGridReact 
+              rowData={categories} 
+              columnDefs={colDefs} 
+              onRowClicked={onRowClicked}
+            />
           </div>
         )}
       </div>

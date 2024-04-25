@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation, NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { onLogout } from '../features/auth/authSlice';
@@ -21,17 +21,17 @@ function classNames(...classes) {
 export default function LeftMenu() {
   const [currentNavItem, setCurrentNavItem] = useState(0);
   const dispatch = useDispatch(); 
+  const location = useLocation();
 
-  // Add this code to update currentNavItem based on active link
   useEffect(() => {
-    const pathname = window.location.pathname;
+    const pathname = location.pathname;
     const activeNavItem = navigation.findIndex(
-      (item) => item.href === pathname
+      (item) => pathname.startsWith(item.href) && (item.href === '/' ? pathname === '/' : true)
     );
     if (activeNavItem !== -1) {
       setCurrentNavItem(activeNavItem);
     }
-  }, []);
+  }, [location]); // React to changes in location
 
   const handleLogout = () => {
     dispatch(onLogout());
@@ -41,7 +41,7 @@ export default function LeftMenu() {
   const navigation = [
     {
       name: 'Dashboard',
-      href: '/dashboard',
+      href: '/',
       icon: HomeIcon,
       count: '5',
       current: currentNavItem === 0,
@@ -73,8 +73,8 @@ export default function LeftMenu() {
       current: currentNavItem === 4,
     },
     {
-      name: 'Reports',
-      href: '#',
+      name: 'Category Details',
+      href: '/category/details',
       icon: ChartPieIcon,
       current: currentNavItem === 5,
     },
@@ -98,9 +98,10 @@ export default function LeftMenu() {
           <li>
             <ul role="list" className="-mx-2 space-y-1">
               {navigation.map((item, index) => (
-                <Link
+                <NavLink
                   key={item.name}
                   to={item.href}
+                  end={item.href === '/'}                  
                   onClick={() => setCurrentNavItem(index)}
                   className={classNames(
                     item.current
@@ -127,7 +128,7 @@ export default function LeftMenu() {
                       {item.count}
                     </span>
                   ) : null}
-                </Link>
+                </NavLink>
               ))}
             </ul>
           </li>
@@ -138,8 +139,9 @@ export default function LeftMenu() {
             <ul role="list" className="-mx-2 mt-2 space-y-1">
               {teams.map((team) => (
                 <li key={team.name}>
-                  <Link
+                  <NavLink
                     to={team.href}
+                    end
                     className={classNames(
                       team.current
                         ? 'bg-red-400 text-white'
@@ -151,7 +153,7 @@ export default function LeftMenu() {
                       {team.initial}
                     </span>
                     <span className="truncate">{team.name}</span>
-                  </Link>
+                  </NavLink>
                 </li>
               ))}
             </ul>            
