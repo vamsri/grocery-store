@@ -122,7 +122,7 @@ export default function LeftMenu() {
                   {item.name}
                   {item.count ? (
                     <span
-                      className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-red-400 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white ring-1 ring-inset ring-indigo-500"
+                      className="ml-auto w-9 min-w-max whitespace-nowrap rounded-full bg-red-400 px-2.5 py-0.5 text-center text-xs font-medium leading-5 text-white ring-1 ring-inset ring-white"
                       aria-hidden="true"
                     >
                       {item.count}
@@ -149,7 +149,7 @@ export default function LeftMenu() {
                       'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                     )}
                   >
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-red-400 text-[0.625rem] font-medium text-white">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-white bg-red-400 text-[0.625rem] font-medium text-white">
                       {team.initial}
                     </span>
                     <span className="truncate">{team.name}</span>

@@ -21,6 +21,7 @@ import Login from './container/Login';
 import UserView from './container/UserView';
 import ImageUpload from './components/ImageUpload';
 import CategoryImage from './container/CategoryImage';
+import ProductImage from './container/ProductImage';
 // import Dashboard from './Dashboard';
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
             <Route path="/category" element={<Category />} />
             <Route path="/category/:id" element={<CategoryImage />} />
             <Route path="/product" element={<Product />} />
+            <Route path="/product/:id" element={<ProductImage />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/document" element={<Document />} />
             <Route path="/about" element={<About />} />

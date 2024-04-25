@@ -1,13 +1,86 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
+import { useNavigate } from 'react-router-dom';
+import 'ag-grid-community/styles/ag-grid.css'; // Mandatory CSS required by the grid
+import 'ag-grid-community/styles/ag-theme-quartz.css'; // Optional Theme applied to the grid
 
 const ProductPage = () => {
+    const navigate = useNavigate();  // Replace useHistory with useNavigate
+
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('');
+    const [categoryList, setCategoryList] = useState([]);
     const [stock, setStock] = useState('');
+
+    // Column Definitions: Defines the columns to be displayed.
+    const [colDefs, setColDefs] = useState();
+
+    useEffect(() => {
+        const deleteRow = (params) => {
+            const idToDelete = params.data.id;
+            setCategoryList(categoryList.filter((row) => row.id !== idToDelete));
+        };
+
+        setColDefs([
+            { field: '_id', flex: 1 },
+            { field: 'name', flex: 1 },
+            { field: 'description', flex: 1 },
+            {
+                headerName: 'Actions',
+                flex: 1,
+                cellRenderer: (params) => (
+                    <button
+                        className="bg-blue-400 w-1/2 text-white"
+                        onClick={() => deleteRow(params)}
+                    >
+                        Delete
+                    </button>
+                ),
+                // Optional: Adjust the width, suppress sorting/filtering for this column
+                width: 200,
+                sortable: false,
+                filter: false,
+            },
+
+        ]);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        getCategories();
+    }, []);
+
+    const onRowClicked = (event) => {
+        console.log('event->', event)
+        navigate(`/product/${event.data._id}`);
+    };
+
+    const getCategories = () => {
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+            'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',
+            'Content-Type': 'application/json'
+        };
+
+        axios
+            .get('http://localhost:4001/api/categories', { headers })
+            .then((response) => {
+                console.log('data->', response.data);
+                if (response.data) {
+                    console.log('categories->', response.data);
+                    setCategoryList(response.data);
+                }
+            })
+            .catch((err) => {
+                console.log('err->', err);
+            });
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,7 +101,7 @@ const ProductPage = () => {
         console.log('Stock:', productStock);
 
         try {
-            const response = await axios.post('http://localhost:4001/products', {
+            const response = await axios.post('localhost:4001/api/products/categories/661a907e0e469cecad72b3c8', {
                 name: productName,
                 price: productPrice,
                 description: productDescription,
@@ -42,8 +115,7 @@ const ProductPage = () => {
     };
 
     return (
-        
-        <div className="container mx-auto p-20">
+        <div className="container mx-auto p-10 h-screen overflow-scroll">
             <h1 className="text-2xl font-bold mb-4">Products</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
@@ -84,10 +156,11 @@ const ProductPage = () => {
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                     >
-                        <option value="">Select a category</option>
-                        <option value="Electronics">Electronics</option>
-                        <option value="Clothing">Clothing</option>
-                        <option value="Books">Books</option>
+                        {categoryList.map((data) => {
+                            return (<>
+                                <option value={data.name}>{data.name}</option>
+                            </>)
+                        })}
                     </select>
                 </div>
                 <div className="mb-4">
@@ -107,6 +180,20 @@ const ProductPage = () => {
                     Submit
                 </button>
             </form>
+            <div className="w-full h-3/5 mt-10">
+                {categoryList.length > 0 && (
+                    <div
+                        className="ag-theme-quartz" // applying the grid theme
+                        style={{ height: '100%' }} // the grid will fill the size of the parent container
+                    >
+                        <AgGridReact
+                            rowData={categoryList}
+                            columnDefs={colDefs}
+                            onRowClicked={onRowClicked}
+                        />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
