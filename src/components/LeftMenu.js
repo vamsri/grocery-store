@@ -20,7 +20,7 @@ function classNames(...classes) {
 
 export default function LeftMenu() {
   const [currentNavItem, setCurrentNavItem] = useState(0);
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const location = useLocation();
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function LeftMenu() {
   const navigation = [
     {
       name: 'Dashboard',
-      href: '/',
+      href: '/dashboard',
       icon: HomeIcon,
       count: '5',
       current: currentNavItem === 0,
@@ -73,17 +73,13 @@ export default function LeftMenu() {
       current: currentNavItem === 4,
     },
     {
-      name: 'Category Details',
-      href: '/category/details',
+      name: 'Analytics',
+      href: '/analytics',
       icon: ChartPieIcon,
       current: currentNavItem === 5,
     },
   ];
-  const teams = [
-    { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
-    { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-    { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
-  ];
+
   return (
     <div className="flex grow flex-col min-h-screen gap-y-5 overflow-y-auto bg-black px-6">
       <div className="flex h-16 shrink-0 items-center">
@@ -101,7 +97,7 @@ export default function LeftMenu() {
                 <NavLink
                   key={item.name}
                   to={item.href}
-                  end={item.href === '/'}                  
+                  end={item.href === '/'}
                   onClick={() => setCurrentNavItem(index)}
                   className={classNames(
                     item.current
@@ -132,33 +128,7 @@ export default function LeftMenu() {
               ))}
             </ul>
           </li>
-          <li>
-            <div className="text-xs font-semibold leading-6 text-indigo-200">
-              Your teams
-            </div>
-            <ul role="list" className="-mx-2 mt-2 space-y-1">
-              {teams.map((team) => (
-                <li key={team.name}>
-                  <NavLink
-                    to={team.href}
-                    end
-                    className={classNames(
-                      team.current
-                        ? 'bg-red-400 text-white'
-                        : 'text-indigo-200 hover:text-white hover:bg-red-400',
-                      'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
-                    )}
-                  >
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-white bg-red-400 text-[0.625rem] font-medium text-white">
-                      {team.initial}
-                    </span>
-                    <span className="truncate">{team.name}</span>
-                  </NavLink>
-                </li>
-              ))}
-            </ul>            
-          </li>
-         
+
           <li className="-mx-6 mt-auto">
             <a
               href="#"
@@ -174,13 +144,13 @@ export default function LeftMenu() {
             </a>
           </li>
         </ul>
-        
+
       </nav>
       <button
-            type="button"
-            className="rounded bg-white/10 px-2 py-2 text-xs font-semibold text-white shadow-sm hover:bg-white/20"
-            onClick={handleLogout}
-          >
+        type="button"
+        className="rounded bg-white/10 px-2 py-2 text-xs font-semibold text-white shadow-sm hover:bg-white/20"
+        onClick={handleLogout}
+      >
         Logout
       </button>
     </div>

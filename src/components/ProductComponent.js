@@ -14,6 +14,7 @@ const ProductPage = () => {
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState({});
     const [categoryList, setCategoryList] = useState([]);
+    const [products,setProducts] = useState([]);
     const [stock, setStock] = useState('');
 
     // Column Definitions: Defines the columns to be displayed.
@@ -58,6 +59,7 @@ const ProductPage = () => {
 
     useEffect(() => {
         getCategories();
+        getProducts();
     }, []);
 
     const onRowClicked = (event) => {
@@ -87,6 +89,27 @@ const ProductPage = () => {
             });
     };
 
+    const getProducts = () => {
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+            'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',
+            'Content-Type': 'application/json'
+        };
+
+        axios
+            .get('http://localhost:4001/api/products', { headers })
+            .then((response) => {
+                console.log('data->', response.data);
+                if (response.data) {
+                    console.log('products->', response.data);
+                    setProducts(response.data);
+                }
+            })
+            .catch((err) => {
+                console.log('err->', err);
+            });
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { name, price, description, stock } = e.target.elements;
@@ -197,7 +220,7 @@ const ProductPage = () => {
                         style={{ height: '100%' }} // the grid will fill the size of the parent container
                     >
                         <AgGridReact
-                            rowData={categoryList}
+                            rowData={products}
                             columnDefs={colDefs}
                             onRowClicked={onRowClicked}
                         />
