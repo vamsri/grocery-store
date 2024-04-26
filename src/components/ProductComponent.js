@@ -12,12 +12,17 @@ const ProductPage = () => {
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState({});
     const [categoryList, setCategoryList] = useState([]);
     const [stock, setStock] = useState('');
 
     // Column Definitions: Defines the columns to be displayed.
     const [colDefs, setColDefs] = useState();
+
+    const handleCategory = (e) => {
+        const selectedCategory = categoryList.filter(data => data.name === e.target.value);
+        setCategory(selectedCategory[0]);
+    };
 
     useEffect(() => {
         const deleteRow = (params) => {
@@ -85,6 +90,11 @@ const ProductPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { name, price, description, stock } = e.target.elements;
+        const token = localStorage.getItem('token');
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+            'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a'
+        };
 
         // Extract the name, price, description, and stock from the event
         const productName = name.value;
@@ -97,17 +107,17 @@ const ProductPage = () => {
         console.log('Name:', productName);
         console.log('Price:', productPrice);
         console.log('Description:', productDescription);
-        console.log('Category:', category);
-        console.log('Stock:', productStock);
+        console.log('Category:', category._id);
+        console.log('inventoryCount:', productStock);
 
         try {
-            const response = await axios.post('localhost:4001/api/products/categories/661a907e0e469cecad72b3c8', {
+            const response = await axios.post('http://localhost:4001/api/products', {
                 name: productName,
                 price: productPrice,
                 description: productDescription,
-                category: category,
-                stock: productStock
-            });
+                categories: category._id,
+                inventoryCount: productStock
+            }, {headers});
             console.log('POST request successful:', response.data);
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -153,8 +163,8 @@ const ProductPage = () => {
                     <select
                         id="category"
                         className="border border-gray-300 rounded px-3 py-2 w-full"
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
+                        value={category.name}
+                        onChange={(e) => handleCategory(e)}
                     >
                         {categoryList.map((data) => {
                             return (<>
