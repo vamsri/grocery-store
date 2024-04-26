@@ -22,6 +22,8 @@ import UserView from './container/UserView';
 import ImageUpload from './components/ImageUpload';
 import CategoryImage from './container/CategoryImage';
 import ProductImage from './container/ProductImage';
+import 'react-toastify/dist/ReactToastify.css';
+
 // import Dashboard from './Dashboard';
 
 function App() {

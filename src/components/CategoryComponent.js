@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
 import { useNavigate } from 'react-router-dom';
 import 'ag-grid-community/styles/ag-grid.css'; // Mandatory CSS required by the grid
@@ -100,12 +101,18 @@ const CategoryForm = () => {
       }, {headers})
       .then((response) => {
         // Handle the response
-        console.log('Response:', response.data);
+        toast.success("New Added Category!", {
+          position: "top-center",
+          theme: "dark"
+        });
         setCategories(response.data);
         getCategories();
       })
       .catch((error) => {
-        // Handle the error
+        toast.error(error.message, {
+          position: "top-center",
+          theme: "dark"
+        });
         console.error('Error:', error);
       });
   };
@@ -167,6 +174,7 @@ const CategoryForm = () => {
           </button>
         </div>
       </form>
+      <ToastContainer />
       <div className="w-full h-3/5 ">
         {categories.length > 0 && (
           <div
