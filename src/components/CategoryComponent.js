@@ -1,14 +1,23 @@
 /* eslint-disable */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
 import { useNavigate } from 'react-router-dom';
+import { ScrollContext } from './Scroll/ScrollProvider';
+import DotLoader from "react-spinners/DotLoader";
 import 'ag-grid-community/styles/ag-grid.css'; // Mandatory CSS required by the grid
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // Optional Theme applied to the grid
 
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red"
+};
+
 const CategoryForm = () => {
   const navigate = useNavigate();  // Replace useHistory with useNavigate
+  const { scroll, handleScroll } = useContext(ScrollContext)
   const [tenantId, setTenantId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -16,6 +25,12 @@ const CategoryForm = () => {
 
   // Column Definitions: Defines the columns to be displayed.
   const [colDefs, setColDefs] = useState();
+
+  const options = {
+    // your options here, for example:
+    duration: 500,
+    smooth: true,
+  };
 
   useEffect(() => {
     const deleteRow = (params) => {
@@ -58,18 +73,22 @@ const CategoryForm = () => {
       'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',
       'Content-Type': 'application/json'
     };
-
-    axios
+    handleScroll(true);
+    setTimeout(() => {
+      axios
       .get('http://localhost:4001/api/categories', {headers})
       .then((response) => {
         console.log('data->', response.data);
         if (response.data) {
           setCategories(response.data);
         }
+        handleScroll(false);
       })
       .catch((err) => {
         console.log('err->', err);
+        handleScroll(false);
       });
+    }, [5000]);   
   };
 
   useEffect(() => {
@@ -101,18 +120,22 @@ const CategoryForm = () => {
       }, {headers})
       .then((response) => {
         // Handle the response
-        toast.success("New Added Category!", {
-          position: "top-center",
-          theme: "dark"
-        });
+        setTimeout(() => {
+          toast.success("New Added Category!", {
+            position: "top-center",
+            theme: "dark"
+          });
+        }, [5000]);        
         setCategories(response.data);
         getCategories();
       })
       .catch((error) => {
-        toast.error(error.message, {
-          position: "top-center",
-          theme: "dark"
-        });
+        setTimeout(() => {
+          toast.error(error.message, {
+            position: "top-center",
+            theme: "dark"
+          });
+        }, [5000]);        
         console.error('Error:', error);
       });
   };
@@ -123,7 +146,7 @@ const CategoryForm = () => {
   };
 
   return (
-    <div className="p-4 w-full h-screen flex flex-col">
+    <div className="p-4 w-full h-screen flex flex-col">      
       <form onSubmit={handleSubmit} className="w-full h-2/5 space-y-4">
       {/* <div>
           <label htmlFor="name" className="block font-medium text-gray-700">
@@ -175,6 +198,7 @@ const CategoryForm = () => {
         </div>
       </form>
       <ToastContainer />
+      
       <div className="w-full h-3/5 ">
         {categories.length > 0 && (
           <div
@@ -188,6 +212,14 @@ const CategoryForm = () => {
             />
           </div>
         )}
+        <DotLoader
+          color={'#36d7b7'}
+          loading={scroll}
+          cssOverride={override}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
       </div>
     </div>
   );
