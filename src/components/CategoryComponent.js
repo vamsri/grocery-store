@@ -6,6 +6,7 @@ import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
 import { useNavigate } from 'react-router-dom';
 import { ScrollContext } from './Scroll/ScrollProvider';
 import DotLoader from "react-spinners/DotLoader";
+import { TrashIcon } from '@heroicons/react/20/solid'
 import 'ag-grid-community/styles/ag-grid.css'; // Mandatory CSS required by the grid
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // Optional Theme applied to the grid
 
@@ -48,12 +49,11 @@ const CategoryForm = () => {
         headerName: 'Actions',
         flex: 1,
         cellRenderer: (params) => (
-          <button
-            className="bg-blue-400 w-1/2 text-white"
+          <div
             onClick={() => deleteRow(params)}
           >
-            Delete
-          </button>
+            <TrashIcon className="h-5 w-5 " aria-hidden="true"/>
+          </div>
         ),
         // Optional: Adjust the width, suppress sorting/filtering for this column
         width: 200,

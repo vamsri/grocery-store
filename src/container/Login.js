@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { onLoginSuccess } from '../features/auth/authSlice';
+import {Alerts} from '@vamsridhar/sharabha-store';
 
 import axios from 'axios';
 
@@ -37,6 +38,10 @@ function Login() {
         }
     };
 
+    const handleClose = async() => {
+        setError(false)
+    }
+
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -49,6 +54,7 @@ function Login() {
                     Sign in to your account
                 </h2>
             </div>
+            {error && <Alerts msg={error} handleClose={() => handleClose()}/>}
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
                 <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
@@ -171,7 +177,6 @@ function Login() {
                         </div>
                     </div>
                 </div>
-
                 <p className="mt-10 text-center text-sm text-gray-500">
                     Not a member?{' '}
                     <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">

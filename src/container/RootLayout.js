@@ -8,7 +8,7 @@ export default function RootLayout({ children }) {
       <div className="w-1/4 min-h-screen">
         <LeftMenu />
       </div>
-      <div className="flex w-3/4 min-h-screen">{children}</div>
+      <div className="flex w-3/4 max-h-screen">{children}</div>
     </div>
   );
 }
