@@ -159,7 +159,7 @@ const ProductPage = () => {
                         className="border border-gray-300 rounded px-3 py-2 w-full"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        autocomplete="off"
+                        autoComplete="off"
                     />
                 </div>
                 <div className="mb-4">

@@ -88,7 +88,7 @@ const CategoryForm = () => {
         console.log('err->', err);
         handleScroll(false);
       });
-    }, [5000]);   
+    }, [1000]);   
   };
 
   useEffect(() => {
@@ -171,7 +171,7 @@ const CategoryForm = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            autocomplete="off"
+            autoComplete="off"
           />
         </div>
         <div>

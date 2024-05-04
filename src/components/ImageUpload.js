@@ -1,10 +1,33 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const ImageUpload = ({catId}) => {
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [category, setCategory] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+      'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',
+      'Content-Type': 'application/json'
+    };
+    axios
+      .get(`http://localhost:4001/api/categories/${catId}`, {headers})
+      .then((response) => {
+        if (response.data) {          
+          const {images} = response.data;
+          setImage(images[0]);
+          setPreviewUrl(images[0]);
+          setCategory(response.data);
+        }
+      })
+      .catch((err) => {
+        console.log('err->', err);
+      });
+  }, []);
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -13,7 +36,7 @@ const ImageUpload = ({catId}) => {
       setPreviewUrl(URL.createObjectURL(file));
     }
   };
-
+  
   const handleSubmit = async(e) => {
     e.preventDefault();
 
