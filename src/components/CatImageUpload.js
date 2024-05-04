@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const ImageUpload = ({catId}) => {
+const CatImageUpload = ({catId}) => {
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [category, setCategory] = useState([]);
@@ -65,14 +65,14 @@ const ImageUpload = ({catId}) => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 w-1/2">
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
         {previewUrl && (
           <div className="flex flex-col items-center">
             <img
               src={previewUrl}
               alt="Preview"
-              className="mb-4 max-w-xs rounded-lg w-48"
+              className="mb-4 max-w-xs rounded-lg w-full"
             />
             <button
               type="button"
@@ -99,4 +99,4 @@ const ImageUpload = ({catId}) => {
   );
 };
 
-export default ImageUpload;
+export default CatImageUpload;

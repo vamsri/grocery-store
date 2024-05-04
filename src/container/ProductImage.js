@@ -1,13 +1,16 @@
 /* eslint-disable */
 import React from 'react';
 import RootLayout from './RootLayout';
-import ImageUpload from '../components/ImageUpload';
+import ProdImageUpload from '../components/ProdImageUpload';
+import { useParams } from 'react-router-dom';
 
 function ProductImage() {
+  const {id: prodId} = useParams();
+  console.log('get the catid->', prodId);
   return (
     <div className="bg-slate-100">
       <RootLayout>
-        <ImageUpload />
+        <ProdImageUpload prodId={prodId}/>
       </RootLayout>
     </div>
   );
