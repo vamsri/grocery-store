@@ -108,7 +108,7 @@ module.exports = (env, argv) => {
             historyApiFallback: true,
             open: true,
             compress: true,
-            port: 3000,
+            port: 3001,
             https: false,
         },
     }

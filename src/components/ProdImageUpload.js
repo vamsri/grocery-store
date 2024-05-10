@@ -1,8 +1,18 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { ScrollContext } from './Scroll/ScrollProvider';
+import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import { DotLoader } from 'react-spinners';
+
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red"
+};
 
 const ProdImageUpload = ({prodId}) => {
+  const { scroll, handleScroll } = useContext(ScrollContext)
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [category, setCategory] = useState([]);
@@ -14,19 +24,21 @@ const ProdImageUpload = ({prodId}) => {
       'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',
       'Content-Type': 'application/json'
     };
+    handleScroll(true);
     axios
       .get(`http://localhost:4001/api/products/${prodId}`, {headers})
       .then((response) => {
         if (response.data) {     
-          console.log('prod by id->', response.data);     
           const {images} = response.data;
           setImage(images[0]);
           setPreviewUrl(images[0]);
           setCategory(response.data);
         }
+        handleScroll(false);
       })
       .catch((err) => {
         console.log('err->', err);
+        handleScroll(false);
       });
   }, []);
 
@@ -47,6 +59,7 @@ const ProdImageUpload = ({prodId}) => {
     const token = localStorage.getItem('token');
 
     try {
+      handleScroll(true);
       const response = await axios.post(`http://localhost:4001/api/products/${prodId}/upload`, formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -54,9 +67,18 @@ const ProdImageUpload = ({prodId}) => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      console.log('Uploaded:', response.data);
+      handleScroll(false);
+      toast.success("New Added Category!", {
+        position: "top-center",
+        theme: "dark"
+      });
     } catch (error) {
       console.error('Upload error:', error);
+      handleScroll(false);
+      toast.error(error.message, {
+        position: "top-center",
+        theme: "dark"
+      });
     }
   };
 
@@ -67,6 +89,14 @@ const ProdImageUpload = ({prodId}) => {
 
   return (
     <div className="container mx-auto p-4 w-1/2">
+       <DotLoader
+          color={'#36d7b7'}
+          loading={scroll}
+          cssOverride={override}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
         {previewUrl && (
           <div className="flex flex-col items-center">
@@ -96,6 +126,7 @@ const ProdImageUpload = ({prodId}) => {
           Submit
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 };
