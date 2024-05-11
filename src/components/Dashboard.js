@@ -1,61 +1,115 @@
 /* eslint-disable */
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { VictoryChart, VictoryBar, VictoryAxis, VictoryTheme, VictoryPie } from 'victory';
 
 const Dashboard = () => {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get('http://localhost:4001/products');
-        setProducts(response.data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
+  const data = [
+    { quarter: 1, earnings: 13000 },
+    { quarter: 2, earnings: 16500 },
+    { quarter: 3, earnings: 14250 },
+    { quarter: 4, earnings: 19000 }
+  ];
   return (
-    <div className="grid gap-3 m-4 p-2 w-screen h-screen overflow-scroll">
-      {products.map((product) => (
-        <div className="bg-slate-100  h-full " key={product.id}>
-          <div className="grid grid-cols-3 h-full">
-            <div className="h-full font-sans uppercase italic p-2 font-semibold">
-              <img src="https://res.cloudinary.com/prod/image/upload/me/rotate-food-2.png" />
-            </div>
-            <div className=" h-full col-span-2 p-4">
-              <div>
-                <span className="text-lg font-bold font-serif">
-                  {product.name}
-                </span>
-              </div>
-              <div className="max-[500]">
-                <span className="font-bold">Description:</span>
-                <span className="font-serif tracking-wide">
-                  {product.description}
-                </span>
-              </div>
-              <div className="text-gray-700">
-                <span className="font-bold">Price:</span>
-                <span className="text-lg font-serif">${product.price}</span>
-              </div>
-              <div className="text-gray-700">
-                <span className="font-bold">Category:</span>
-                <span className="text-lg font-serif">
-                  {product.category.name}
-                </span>
-              </div>
-              <div className="text-gray-700">
-                <span className="font-bold">Stock:</span>
-                <span className="text-lg font-serif">{product.stock}</span>
-              </div>
-            </div>
-          </div>
+    <div className="container mx-auto p-10 h-screen overflow-scroll grid grid-cols-1 md:grid-cols-2 gap-2">
+      <div className="w-102 h-80 bg-white border-2">
+        <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Sales Overview</h1>
+        <div className='w-full h-4/5'>
+          <VictoryChart
+            // adding the material theme provided with Victory
+            theme={VictoryTheme.material}
+            domainPadding={20}
+          >
+            <VictoryAxis
+              tickValues={[1, 2, 3, 4]}
+              tickFormat={["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"]}
+            />
+            <VictoryAxis
+              dependentAxis
+              tickFormat={(x) => (`$${x / 1000}k`)}
+            />
+            <VictoryBar
+              data={data}
+              x="quarter"
+              y="earnings"
+            />
+          </VictoryChart>
         </div>
-      ))}
+      </div>
+      <div className="w-102 h-80 bg-white border-2">
+        <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Order Management</h1>
+        <div className='w-full h-4/5'>
+          <VictoryPie
+            colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
+            data={[
+              { x: "Cats", y: 35 },
+              { x: "Dogs", y: 40 },
+              { x: "Birds", y: 55 }
+            ]}
+          />
+        </div>
+      </div>
+      <div className="w-102 h-80 bg-white border-2">
+        <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Customer Management</h1>
+        <div className='w-full h-4/5'>
+          <VictoryPie
+            colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
+            data={[
+              { x: "Cats", y: 35 },
+              { x: "Dogs", y: 40 },
+              { x: "Birds", y: 55 }
+            ]}
+          />
+        </div>
+      </div>
+      <div className="w-102 h-80 bg-white border-2">
+        <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Product Inventory</h1>
+        <div className='w-full h-4/5'>
+          <VictoryChart
+            // adding the material theme provided with Victory
+            theme={VictoryTheme.material}
+            domainPadding={20}
+          >
+            <VictoryAxis
+              tickValues={[1, 2, 3, 4]}
+              tickFormat={["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"]}
+            />
+            <VictoryAxis
+              dependentAxis
+              tickFormat={(x) => (`$${x / 1000}k`)}
+            />
+            <VictoryBar
+              data={data}
+              x="quarter"
+              y="earnings"
+            />
+          </VictoryChart>
+        </div>
+      </div>
+      
+      <div className="w-102 h-80 bg-white border-2">
+        <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Product Inventory</h1>
+        <div className='w-full h-4/5'>
+          <VictoryChart
+            // adding the material theme provided with Victory
+            theme={VictoryTheme.material}
+            domainPadding={20}
+          >
+            <VictoryAxis
+              tickValues={[1, 2, 3, 4]}
+              tickFormat={["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"]}
+            />
+            <VictoryAxis
+              dependentAxis
+              tickFormat={(x) => (`$${x / 1000}k`)}
+            />
+            <VictoryBar
+              data={data}
+              x="quarter"
+              y="earnings"
+            />
+          </VictoryChart>
+        </div>
+      </div>
     </div>
   );
 };

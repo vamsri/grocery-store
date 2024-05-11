@@ -40,7 +40,7 @@ const ProductPage = () => {
                 flex: 1,
                 cellRenderer: (params) => (
                     <button
-                        className="bg-blue-400 w-1/2 text-white"
+                        className="bg-red-400 w-1/2 text-white"
                         onClick={() => deleteRow(params)}
                     >
                         Delete
@@ -148,71 +148,75 @@ const ProductPage = () => {
     };
 
     return (
-        <div className="container mx-auto p-10 h-screen overflow-scroll">
-            <h1 className="text-2xl font-bold mb-4">Products</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                    <label htmlFor="name" className="block font-medium mb-1">Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        className="border border-gray-300 rounded px-3 py-2 w-full"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        autoComplete="off"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="price" className="block font-medium mb-1">Price</label>
-                    <input
-                        type="number"
-                        id="price"
-                        className="border border-gray-300 rounded px-3 py-2 w-full"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="description" className="block font-medium mb-1">Description</label>
-                    <textarea
-                        id="description"
-                        className="border border-gray-300 rounded px-3 py-2 w-full"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    ></textarea>
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="category" className="block font-medium mb-1">Category</label>
-                    <select
-                        id="category"
-                        className="border border-gray-300 rounded px-3 py-2 w-full"
-                        value={category.name}
-                        onChange={(e) => handleCategory(e)}
-                    >
-                        {categoryList.map((data) => {
-                            return (<>
-                                <option value={data.name}>{data.name}</option>
-                            </>)
-                        })}
-                    </select>
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="stock" className="block font-medium mb-1">Stock</label>
-                    <input
-                        type="number"
-                        id="stock"
-                        className="border border-gray-300 rounded px-3 py-2 w-full"
-                        value={stock}
-                        onChange={(e) => setStock(e.target.value)}
-                    />
-                </div>
-                <button
-                    type="submit"
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded"
-                >
-                    Submit
-                </button>
-            </form>
+        <div className="container mx-auto p-10 h-screen overflow-scroll">            
+            <div className="w-96 h-128 bg-white border-2">  
+                <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Products</h1> 
+                <form onSubmit={handleSubmit} className='p-2'>
+                    <div className="mb-4 flex justify-end items-center">
+                        <label htmlFor="name" className="block font-medium mb-1 w-1/4">Name:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            className="border border-gray-300 rounded px-3 py-2 w-3/4"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            autoComplete="off"
+                        />
+                    </div>
+                    <div className="mb-4 flex justify-end items-center">
+                        <label htmlFor="price" className="block font-medium mb-1 w-1/4">Price:</label>
+                        <input
+                            type="number"
+                            id="price"
+                            className="border border-gray-300 rounded px-3 py-2 w-3/4"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                        />
+                    </div>
+                    <div className="mb-4 flex justify-end items-center">
+                        <label htmlFor="description" className="block font-medium mb-1 w-1/4">Description:</label>
+                        <textarea
+                            id="description"
+                            className="border border-gray-300 rounded px-3 py-2 w-3/4"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        ></textarea>
+                    </div>
+                    <div className="mb-4 flex justify-end items-center">
+                        <label htmlFor="category" className="block font-medium mb-1 w-1/4">Category:</label>
+                        <select
+                            id="category"
+                            className="border border-gray-300 rounded px-3 py-2 w-3/4"
+                            value={category.name}
+                            onChange={(e) => handleCategory(e)}
+                        >
+                            {categoryList.map((data) => {
+                                return (<>
+                                    <option value={data.name}>{data.name}</option>
+                                </>)
+                            })}
+                        </select>
+                    </div>
+                    <div className="mb-4 flex justify-end items-center">
+                        <label htmlFor="stock" className="block font-medium mb-1 w-1/4">Stock:</label>
+                        <input
+                            type="number"
+                            id="stock"
+                            className="border border-gray-300 rounded px-3 py-2 w-3/4"
+                            value={stock}
+                            onChange={(e) => setStock(e.target.value)}
+                        />
+                    </div>
+                    <div className="flex justify-center items-center">
+                        <button
+                            type="submit"
+                            className="bg-red-400 hover:bg-red-600 text-white font-medium py-1 px-4 rounded"
+                        >
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
             <div className="w-full h-3/5 mt-10">
                 {categoryList.length > 0 && (
                     <div

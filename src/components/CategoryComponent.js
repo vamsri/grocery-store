@@ -19,22 +19,16 @@ const override = {
 };
 
 const CategoryForm = () => {
-  const navigate = useNavigate();  // Replace useHistory with useNavigate
+  // Replace useHistory with useNavigate
+  const navigate = useNavigate();  
   const dispatch = useDispatch();
-  // const { scroll, handleScroll } = useContext(ScrollContext)
-  const [tenantId, setTenantId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  // const [categories, setCategories] = useState([]);
+  const [colDefs, setColDefs] = useState();
   const categories = useSelector(state => state.categories.entities);
   const loading = useSelector(state => state.categories.loading);
 
-  console.log('loading->', loading);
-  // Column Definitions: Defines the columns to be displayed.
-  const [colDefs, setColDefs] = useState();
-
   const options = {
-    // your options here, for example:
     duration: 500,
     smooth: true,
   };
@@ -102,60 +96,49 @@ const CategoryForm = () => {
   };
 
   return (
-    <div className="p-4 w-full h-screen flex flex-col">      
-      <form onSubmit={handleSubmit} className="w-full h-2/5 space-y-4">
-      {/* <div>
-          <label htmlFor="name" className="block font-medium text-gray-700">
-            Tenant ID
-          </label>
-          <input
-            type="text"
-            id="tenant"
-            value={tenantId}
-            onChange={(e) => setTenantId(e.target.value)}
-            className="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            autocomplete="off"
-          />
-        </div> */}
-        <div>
-          <label htmlFor="name" className="block font-medium text-gray-700">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            autoComplete="off"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="description"
-            className="block font-medium text-gray-700"
-          >
-            Description
-          </label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          ></textarea>
-        </div>
-        <div>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
-          >
-            Submit
-          </button>
-        </div>
-      </form>
+    <div className="p-4 w-full h-screen flex flex-col">  
+      <div className="w-full">    
+        <form onSubmit={handleSubmit} className="w-full h-2/5 space-y-4">      
+          <div>
+            <label htmlFor="name" className="block font-medium text-gray-700">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              autoComplete="off"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="description"
+              className="block font-medium text-gray-700"
+            >
+              Description
+            </label>
+            <textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            ></textarea>
+          </div>
+          <div>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
       <ToastContainer />
       
-      <div className="w-full h-3/5 ">
+      {!loading && <div className="w-full h-3/5 ">
         {categories?.length > 0 && (
           <div
             className="ag-theme-quartz" // applying the grid theme
@@ -167,8 +150,9 @@ const CategoryForm = () => {
               onRowClicked={onRowClicked}
             />
           </div>
-        )}
-        <DotLoader
+        )}        
+      </div>}
+      <DotLoader
           color={'#36d7b7'}
           loading={loading}
           cssOverride={override}
@@ -176,7 +160,6 @@ const CategoryForm = () => {
           aria-label="Loading Spinner"
           data-testid="loader"
         />
-      </div>
     </div>
   );
 };

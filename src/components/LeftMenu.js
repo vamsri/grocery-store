@@ -43,14 +43,14 @@ export default function LeftMenu() {
       name: 'Dashboard',
       href: '/dashboard',
       icon: HomeIcon,
-      count: '5',
+      count: '',
       current: currentNavItem === 0,
     },
     {
       name: 'Category',
       href: '/category',
       icon: FolderIcon,
-      count: '12',
+      count: '',
       current: currentNavItem === 1,
     },
     {
@@ -63,7 +63,7 @@ export default function LeftMenu() {
       name: 'Profile',
       href: '/profile',
       icon: CalendarIcon,
-      count: '20+',
+      count: '',
       current: currentNavItem === 3,
     },
     {
