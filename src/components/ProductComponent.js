@@ -4,20 +4,28 @@ import axios from 'axios';
 import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProducts } from './../features/products/productSlice';
+import { createProducts, fetchProducts } from './../features/products/productSlice';
 import { fetchCategory } from './../features/categories/categorySlice';
 import { useForm } from 'react-hook-form';
+import { ToastContainer } from 'react-toastify';
+import { DotLoader } from 'react-spinners';
 import 'ag-grid-community/styles/ag-grid.css'; // Mandatory CSS required by the grid
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // Optional Theme applied to the grid
 
 export const Error = (msg) => (<div className='text-red-400 text-right'>{msg}</div>);
+
+const override = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red"
+};
 
 const ProductPage = () => {
     const navigate = useNavigate();  // Replace useHistory with useNavigate    
     const dispatch = useDispatch();
     const {register, handleSubmit, formState: {errors, touchedFields, isValid}} = useForm()
 
-    // const productLoading = useSelector(state => state.products.loading);
+    const productLoading = useSelector(state => state.products.loading);
     const productEntity = useSelector(state => state.products.entities);
     // const categoryLoading = useSelector(state => state.categories.loading);
     const categoryEntity = useSelector(state => state.categories.entities);
@@ -81,13 +89,7 @@ const ProductPage = () => {
         dispatch(fetchProducts());
     };
     const onSubmit = async (data) => {
-        console.log('errors->', errors, isValid);
-        const { username, price, description, stock } = data;
-        const token = localStorage.getItem('token');
-        const headers = {
-            'Authorization': `Bearer ${token}`,
-            'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a'
-        };
+        const { username, price, description, stock } = data;      
 
         // Extract the name, price, description, and stock from the event
         const productName = username;
@@ -95,18 +97,13 @@ const ProductPage = () => {
         const productDescription = description;
         const productStock = parseInt(stock);
 
-        try {
-            const response = await axios.post('http://localhost:4001/api/products', {
-                name: productName,
-                price: productPrice,
-                description: productDescription,
-                categories: category._id,
-                inventoryCount: productStock
-            }, { headers });
-            console.log('POST request successful:', response.data);
-        } catch (error) {
-            console.error('Error submitting form:', error);
-        }
+        dispatch(createProducts({
+            productName,
+            productPrice,
+            productDescription,
+            id: category._id,
+            productStock
+        }));        
     };
 
     return (
@@ -184,6 +181,7 @@ const ProductPage = () => {
                     </div>
                 </form>
             </div>
+            <ToastContainer />
             <div className="w-full h-3/5 mt-10">
                 {productEntity?.length > 0 && (
                     <div
@@ -198,6 +196,14 @@ const ProductPage = () => {
                     </div>
                 )}
             </div>
+            <DotLoader
+                color={'#36d7b7'}
+                loading={productLoading}
+                cssOverride={override}
+                size={50}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+            />
         </div>
     );
 };

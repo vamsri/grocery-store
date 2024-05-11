@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 export const fetchCategory = createAsyncThunk(
@@ -21,19 +22,30 @@ export const fetchCategory = createAsyncThunk(
 export const addCategory = createAsyncThunk(
   'category/add',
   async (catPayload, thunkAPI) => {
-    const token = localStorage.getItem('token');
+    try {
+      const token = localStorage.getItem('token');
 
-    const response = await axios.post(
-      'http://localhost:4001/api/categories',
-      { ...catPayload },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',
-        },
-      }
-    );
-    return response.data;
+      const response = await axios.post(
+        'http://localhost:4001/api/categories',
+        { ...catPayload },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',
+          },
+        }
+      );
+      toast.success('category uploaded sucessfully', {
+        position: 'top-center',
+        theme: 'dark',
+      });
+      return response.data;
+    } catch (error) {
+      toast.error(error.message, {
+        position: 'top-center',
+        theme: 'dark',
+      });
+    }
   }
 );
 
