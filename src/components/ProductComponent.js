@@ -115,7 +115,7 @@ const ProductPage = () => {
                 <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Products</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className='p-2'>
                     <div className="mb-2 flex justify-end items-center">
-                        <label htmlFor="name" className="block font-medium mb-1 w-1/4">Name:</label>
+                        <label htmlFor="name" className="block font-medium mb-1 w-1/4"><span className="text-red-500">{'*'}</span>Name:</label>
                         <input
                             className={`${errors.username && touchedFields.username ? 'border-2 border-red-300' : 'border-2 border-gray-300'} rounded px-3 py-2 w-3/4`}
                             autoComplete="off"
@@ -125,7 +125,7 @@ const ProductPage = () => {
                     </div>    
                     {errors.username && touchedFields.username && Error('Username is required')}                
                     <div className="mb-2 flex justify-end items-center">
-                        <label htmlFor="price" className="block font-medium mb-1 w-1/4">Price:</label>
+                        <label htmlFor="price" className="block font-medium mb-1 w-1/4"><span className="text-red-500">{'*'}</span>Price:</label>
                         <input
                             type="number"
                             id="price"
@@ -137,7 +137,7 @@ const ProductPage = () => {
                     </div>
                     {errors.price && touchedFields.price && Error('Price is required')}
                     <div className="mb-2 flex justify-end items-center">
-                        <label htmlFor="description" className="block font-medium mb-1 w-1/4">Description:</label>
+                        <label htmlFor="description" className="block font-medium mb-1 w-1/4"><span className="text-red-500">{'*'}</span>Description:</label>
                         <textarea
                             id="description"
                             className={`${errors.description && touchedFields.description ? 'border-2 border-red-300' : 'border-2 border-gray-300'} rounded px-3 py-2 w-3/4`}
@@ -148,7 +148,7 @@ const ProductPage = () => {
                     </div>
                     {errors.description && touchedFields.description && Error('Description is required')}
                     <div className="mb-2 flex justify-end items-center">
-                        <label htmlFor="category" className="block font-medium mb-1 w-1/4">Category:</label>
+                        <label htmlFor="category" className="block font-medium mb-1 w-1/4"><span className="text-red-500">{'*'}</span>Category:</label>
                         <select
                             id="category"
                             className={`${errors.name && touchedFields.name ? 'border-2 border-red-300' : 'border-2 border-gray-300'} rounded px-3 py-2 w-3/4`}
@@ -164,7 +164,7 @@ const ProductPage = () => {
                     </div>
                     {errors.name && touchedFields.name && Error('Name is required')}
                     <div className="mb-2 flex justify-end items-center">
-                        <label htmlFor="stock" className="block font-medium mb-1 w-1/4">Stock:</label>
+                        <label htmlFor="stock" className="block font-medium mb-1 w-1/4"><span className="text-red-500">{'*'}</span>Stock:</label>
                         <input
                             type="number"
                             id="stock"
