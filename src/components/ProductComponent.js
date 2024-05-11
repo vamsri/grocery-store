@@ -3,32 +3,40 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProducts } from './../features/products/productSlice';
+import { fetchCategory } from './../features/categories/categorySlice';
 import 'ag-grid-community/styles/ag-grid.css'; // Mandatory CSS required by the grid
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // Optional Theme applied to the grid
 
 const ProductPage = () => {
     const navigate = useNavigate();  // Replace useHistory with useNavigate
 
+    const dispatch = useDispatch();
+    // const productLoading = useSelector(state => state.products.loading);
+    const productEntity = useSelector(state => state.products.entities);
+    // const categoryLoading = useSelector(state => state.categories.loading);
+    const categoryEntity = useSelector(state => state.categories.entities);
+
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState({});
-    const [categoryList, setCategoryList] = useState([]);
-    const [products,setProducts] = useState([]);
+
     const [stock, setStock] = useState('');
 
     // Column Definitions: Defines the columns to be displayed.
     const [colDefs, setColDefs] = useState();
 
     const handleCategory = (e) => {
-        const selectedCategory = categoryList.filter(data => data.name === e.target.value);
+        const selectedCategory = categoryEntity.filter(data => data.name === e.target.value);
         setCategory(selectedCategory[0]);
     };
 
     useEffect(() => {
         const deleteRow = (params) => {
             const idToDelete = params.data.id;
-            setCategoryList(categoryList.filter((row) => row.id !== idToDelete));
+            // setCategoryList(categoryList.filter((row) => row.id !== idToDelete));
         };
 
         setColDefs([
@@ -68,47 +76,11 @@ const ProductPage = () => {
     };
 
     const getCategories = () => {
-        const token = localStorage.getItem('token');
-        const headers = {
-            'Authorization': `Bearer ${token}`,
-            'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',
-            'Content-Type': 'application/json'
-        };
-
-        axios
-            .get('http://localhost:4001/api/categories', { headers })
-            .then((response) => {
-                console.log('data->', response.data);
-                if (response.data) {
-                    console.log('categories->', response.data);
-                    setCategoryList(response.data);
-                }
-            })
-            .catch((err) => {
-                console.log('err->', err);
-            });
+        dispatch(fetchCategory());
     };
 
     const getProducts = () => {
-        const token = localStorage.getItem('token');
-        const headers = {
-            'Authorization': `Bearer ${token}`,
-            'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',
-            'Content-Type': 'application/json'
-        };
-
-        axios
-            .get('http://localhost:4001/api/products', { headers })
-            .then((response) => {
-                console.log('data->', response.data);
-                if (response.data) {
-                    console.log('products->', response.data);
-                    setProducts(response.data);
-                }
-            })
-            .catch((err) => {
-                console.log('err->', err);
-            });
+        dispatch(fetchProducts());
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -140,7 +112,7 @@ const ProductPage = () => {
                 description: productDescription,
                 categories: category._id,
                 inventoryCount: productStock
-            }, {headers});
+            }, { headers });
             console.log('POST request successful:', response.data);
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -148,9 +120,9 @@ const ProductPage = () => {
     };
 
     return (
-        <div className="container mx-auto p-10 h-screen overflow-scroll">            
-            <div className="w-96 h-128 bg-white border-2">  
-                <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Products</h1> 
+        <div className="container mx-auto p-10 h-screen overflow-scroll">
+            <div className="w-96 h-128 bg-white border-2">
+                <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Products</h1>
                 <form onSubmit={handleSubmit} className='p-2'>
                     <div className="mb-4 flex justify-end items-center">
                         <label htmlFor="name" className="block font-medium mb-1 w-1/4">Name:</label>
@@ -190,7 +162,7 @@ const ProductPage = () => {
                             value={category.name}
                             onChange={(e) => handleCategory(e)}
                         >
-                            {categoryList.map((data) => {
+                            {categoryEntity.map((data) => {
                                 return (<>
                                     <option value={data.name}>{data.name}</option>
                                 </>)
@@ -218,13 +190,13 @@ const ProductPage = () => {
                 </form>
             </div>
             <div className="w-full h-3/5 mt-10">
-                {categoryList.length > 0 && (
+                {productEntity?.length > 0 && (
                     <div
                         className="ag-theme-quartz" // applying the grid theme
                         style={{ height: '100%' }} // the grid will fill the size of the parent container
                     >
                         <AgGridReact
-                            rowData={products}
+                            rowData={productEntity}
                             columnDefs={colDefs}
                             onRowClicked={onRowClicked}
                         />

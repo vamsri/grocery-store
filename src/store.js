@@ -16,6 +16,7 @@ import authReducer from './features/auth/authSlice';
 import counterReducer from './features/counter/counterSlice';
 import usersReducer from './features/users/userSlice';
 import categorySlice from './features/categories/categorySlice';
+import productSlice from './features/products/productSlice';
 
 const persistConfig = {
   key: 'root',
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   counter: counterReducer,
   users: usersReducer,
   categories: categorySlice,
+  products: productSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

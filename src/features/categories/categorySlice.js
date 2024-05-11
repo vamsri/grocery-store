@@ -14,7 +14,6 @@ export const fetchCategory = createAsyncThunk(
     const response = await axios.get(`http://localhost:4001/api/categories`, {
       headers,
     });
-    console.log('data->', response.data);
     return response.data;
   }
 );
