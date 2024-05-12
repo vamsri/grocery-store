@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
 import { useNavigate } from 'react-router-dom';
-// import { ScrollContext } from './Scroll/ScrollProvider';
 import DotLoader from "react-spinners/DotLoader";
 import { TrashIcon } from '@heroicons/react/20/solid';
 import { fetchCategory, addCategory} from './../features/categories/categorySlice';
+import { useForm} from "react-hook-form";
 
 import 'ag-grid-community/styles/ag-grid.css'; // Mandatory CSS required by the grid
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // Optional Theme applied to the grid
@@ -18,6 +18,8 @@ const override = {
   borderColor: "red"
 };
 
+export const Error = (msg) => (<div className='text-red-400 text-left'>{msg}</div>);
+
 const CategoryForm = () => {
   // Replace useHistory with useNavigate
   const navigate = useNavigate();  
@@ -27,6 +29,7 @@ const CategoryForm = () => {
   const [colDefs, setColDefs] = useState();
   const categories = useSelector(state => state.categories.entities);
   const loading = useSelector(state => state.categories.loading);
+  const {register, handleSubmit, formState: {errors, touchedFields}} = useForm();
 
   const options = {
     duration: 500,
@@ -74,13 +77,12 @@ const CategoryForm = () => {
     getCategories();
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = (data) => {
 
     // Extract name and description from event
-    const { name, description } = e.target.elements;
-    const nameValue = name.value;
-    const descriptionValue = description.value;
+    const { name, description } = data;
+    const nameValue = name;
+    const descriptionValue = description;
 
     dispatch(addCategory({
       domain: 'www.abc.store.com',
@@ -97,39 +99,41 @@ const CategoryForm = () => {
 
   return (
     <div className="p-4 w-full h-screen flex flex-col">  
-      <div className="w-full">    
-        <form onSubmit={handleSubmit} className="w-full h-2/5 space-y-4">      
+      <div className="w-128 h-128 bg-white border-2 p-2 mb-2">    
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full h-2/5 space-y-4">      
           <div>
             <label htmlFor="name" className="block font-medium text-gray-700">
-              Name
+              <span className="text-red-500">{'*'}</span>Name:
             </label>
             <input
               type="text"
               id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              {...register("name", {required: true})}
+              className={`${errors.name && touchedFields.name ? 'border-2 border-red-300' : 'border-2 border-gray-300'} rounded px-3 py-2 w-full`}
               autoComplete="off"
+              placeholder='Enter Category name...'
             />
           </div>
+          {errors.name && touchedFields.name && Error("Name is required...")}
           <div>
             <label
               htmlFor="description"
               className="block font-medium text-gray-700"
             >
-              Description
+              <span className="text-red-500">{'*'}</span>Description:
             </label>
             <textarea
               id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              {...register("description", {required: true})}
+              placeholder='Enter Category Description...'
+              className={`${errors.description && touchedFields.description ? 'border-2 border-red-300' : 'border-2 border-gray-300'} rounded px-3 py-2 w-full`}
             ></textarea>
           </div>
+          {errors.description && touchedFields.description && Error("Category Description is required...")}
           <div>
             <button
               type="submit"
-              className="px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
+              className="px-4 py-1 bg-red-400 text-white hover:bg-red-500"
             >
               Submit
             </button>

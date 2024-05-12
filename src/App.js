@@ -18,8 +18,6 @@ import About from './container/About';
 import NotFound from './container/NotFound';
 import Register from './container/Register';
 import Login from './container/Login';
-import UserView from './container/UserView';
-import ImageUpload from './components/CatImageUpload';
 import CategoryImage from './container/CategoryImage';
 import ProductImage from './container/ProductImage';
 import 'react-toastify/dist/ReactToastify.css';
@@ -36,7 +34,7 @@ function App() {
     <Router>
       <div>
         <Routes>
-          <Route path="/" element={<UserView />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<PrivateRoute isAuthenticated={isAuthenticated} />}>

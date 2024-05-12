@@ -23,7 +23,7 @@ const override = {
 const ProductPage = () => {
     const navigate = useNavigate();  // Replace useHistory with useNavigate    
     const dispatch = useDispatch();
-    const {register, handleSubmit, formState: {errors, touchedFields, isValid}} = useForm()
+    const {register, handleSubmit, formState: {errors, touchedFields }} = useForm()
 
     const productLoading = useSelector(state => state.products.loading);
     const productEntity = useSelector(state => state.products.entities);
@@ -174,7 +174,7 @@ const ProductPage = () => {
                     <div className="flex justify-center items-center">
                         <button
                             type="submit"
-                            className="bg-red-400 hover:bg-red-600 text-white font-medium py-1 px-4 rounded"
+                            className="bg-red-400 hover:bg-red-600 text-white font-medium py-1 px-4"
                         >
                             Submit
                         </button>
