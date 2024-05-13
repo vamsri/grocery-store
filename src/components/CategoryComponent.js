@@ -99,8 +99,10 @@ const CategoryForm = () => {
 
   return (
     <div className="p-4 w-full h-screen flex flex-col">  
-      <div className="w-128 h-128 bg-white border-2 p-2 mb-2">    
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full h-2/5 space-y-4">      
+      <div className="w-128 h-128 bg-white border-2 mb-2">    
+        <h1 className="bg-cyan-200 w-full mx-auto p-2">Categories</h1>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full h-2/5 space-y-4 p-2">      
           <div>
             <label htmlFor="name" className="block font-medium text-gray-700">
               <span className="text-red-500">{'*'}</span>Name:
@@ -130,14 +132,11 @@ const CategoryForm = () => {
             ></textarea>
           </div>
           {errors.description && touchedFields.description && Error("Category Description is required...")}
-          <div>
-            <button
-              type="submit"
-              className="px-4 py-1 bg-red-400 text-white hover:bg-red-500"
-            >
-              Submit
+          <div className={"flex justify-end"}>
+            <button className={'w-1/4 m-2 p-1 bg-cyan-400 rounded tracking-wider text-white'}>
+            Submit
             </button>
-          </div>
+        </div>
         </form>
       </div>
       <ToastContainer />

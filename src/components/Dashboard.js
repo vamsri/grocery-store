@@ -12,7 +12,7 @@ const Dashboard = () => {
   return (
     <div className="container mx-auto p-10 h-screen overflow-scroll grid grid-cols-1 md:grid-cols-2 gap-2">
       <div className="w-102 h-80 bg-white border-2">
-        <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Sales Overview</h1>
+        <h1 className="text-sm bg-cyan-200 w-full mx-auto p-2">Sales Overview</h1>
         <div className='w-full h-4/5'>
           <VictoryChart
             // adding the material theme provided with Victory
@@ -36,7 +36,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="w-102 h-80 bg-white border-2">
-        <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Order Management</h1>
+        <h1 className="text-sm bg-cyan-200 w-full mx-auto p-2">Order Management</h1>
         <div className='w-full h-4/5'>
           <VictoryPie
             colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
@@ -49,7 +49,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="w-102 h-80 bg-white border-2">
-        <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Customer Management</h1>
+        <h1 className="text-sm bg-cyan-200 w-full mx-auto p-2">Customer Management</h1>
         <div className='w-full h-4/5'>
           <VictoryPie
             colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
@@ -62,7 +62,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="w-102 h-80 bg-white border-2">
-        <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Product Inventory</h1>
+        <h1 className="text-sm bg-cyan-200 w-full mx-auto p-2">Product Inventory</h1>
         <div className='w-full h-4/5'>
           <VictoryChart
             // adding the material theme provided with Victory
@@ -87,7 +87,7 @@ const Dashboard = () => {
       </div>
       
       <div className="w-102 h-80 bg-white border-2">
-        <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Product Inventory</h1>
+        <h1 className="text-sm bg-cyan-400 text-white uppercase w-full mx-auto p-2">Product Inventory</h1>
         <div className='w-full h-4/5'>
           <VictoryChart
             // adding the material theme provided with Victory

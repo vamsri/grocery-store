@@ -24,8 +24,8 @@ const Address = () =>{
           <input
             {...register('street', { required: true })}
             className={'w-2/3 p-1 border-2 border-grey-200'}
-            placeholder="Enter Street.."
             autoComplete="off"
+            placeholder="Enter Street.."
           />
         </div>
         <div className="flex m-2">
@@ -74,7 +74,7 @@ const Address = () =>{
           />
         </div>
         <div className={"flex justify-end"}>
-            <button className={'w-1/4 m-2 p-1 bg-red-400 text-white'}>
+            <button className={'w-1/4 m-2 p-1 bg-cyan-400 rounded tracking-wider text-white'}>
             Submit
             </button>
         </div>

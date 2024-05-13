@@ -109,7 +109,7 @@ const ProductPage = () => {
     return (
         <div className="container mx-auto p-10 h-screen overflow-scroll">
             <div className="w-128 h-128 bg-white border-2">
-                <h1 className="text-sm bg-red-400 text-white uppercase w-full mx-auto p-2">Products</h1>
+                <h1 className="bg-cyan-200 w-full mx-auto p-2">Products</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className='p-2'>
                     <div className="mb-2 flex justify-end items-center">
                         <label htmlFor="name" className="block font-medium mb-1 w-1/4"><span className="text-red-500">{'*'}</span>Name:</label>
@@ -171,14 +171,11 @@ const ProductPage = () => {
                         />
                     </div>
                     {errors.stock && touchedFields.stock && Error('Stock is required')}
-                    <div className="flex justify-center items-center">
-                        <button
-                            type="submit"
-                            className="bg-red-400 hover:bg-red-600 text-white font-medium py-1 px-4"
-                        >
-                            Submit
-                        </button>
-                    </div>
+                    <div className={"flex justify-end"}>
+            <button className={'w-1/4 m-2 p-1 bg-cyan-400 rounded tracking-wider text-white'}>
+            Submit
+            </button>
+        </div>
                 </form>
             </div>
             <ToastContainer />

@@ -80,7 +80,7 @@ const BrandInfo = () => {
         </div>
         {errors.brand_guidelines && touchedFields.brand_guidelines && Error("Entered value does not match brand guidelines format")}
         <div className={"flex justify-end"}>
-            <button className={'w-1/4 m-2 p-1 bg-red-400 text-white'}>
+            <button className={'w-1/4 m-2 p-1 bg-cyan-400 rounded tracking-wider text-white'}>
             Submit
             </button>
         </div>
