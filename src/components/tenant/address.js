@@ -2,6 +2,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+export const Error = (msg) => (<div className='text-red-400 text-right'>{msg}</div>);
+
 const Address = () =>{
   const {
     register,
@@ -14,7 +16,7 @@ const Address = () =>{
   };
 
   return (
-    <div className="bg-white flex flex-col border-2 border-slate-200">
+    <div className="bg-white flex flex-col border-2 border-slate-200 mb-2">
       <header className="h-8 bg-cyan-200">Address</header>
       <form onSubmit={handleSubmit(onSubmit)} className={'p-2 '}>
         <div className="flex m-2">
@@ -71,9 +73,11 @@ const Address = () =>{
             autoComplete="off"
           />
         </div>
-        <button type="submit" className={'m-2 w-1/4 p-1 bg-red-400 text-white'}>
-          Submit
-        </button>
+        <div className={"flex justify-end"}>
+            <button className={'w-1/4 m-2 p-1 bg-red-400 text-white'}>
+            Submit
+            </button>
+        </div>
       </form>
     </div>
   );
