@@ -60,8 +60,8 @@ export default function LeftMenu() {
       current: currentNavItem === 2,
     },
     {
-      name: 'Profile',
-      href: '/profile',
+      name: 'Tenant',
+      href: '/tenant',
       icon: CalendarIcon,
       count: '',
       current: currentNavItem === 3,

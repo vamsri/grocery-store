@@ -43,7 +43,7 @@ function App() {
             <Route path="/category/:id" element={<CategoryImage />} />
             <Route path="/product" element={<Product />} />
             <Route path="/product/:id" element={<ProductImage />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/tenant" element={<Profile />} />
             <Route path="/document" element={<Document />} />
             <Route path="/about" element={<About />} />
             {/* Fallback route for 404 not found pages */}
