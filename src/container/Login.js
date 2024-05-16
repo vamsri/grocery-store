@@ -28,7 +28,7 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:4001/login', credentials);
+            const response = await axios.post('http://localhost:4001/api/login', credentials);
             const { token } = response.data;
             localStorage.setItem('token', token);
             dispatch(onLoginSuccess());  // You might want to do something on successful login
