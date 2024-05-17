@@ -85,7 +85,7 @@ const CategoryForm = () => {
     const descriptionValue = description;
 
     dispatch(addCategory({
-      domain: 'www.abc.store.com',
+      domain: 'www.narayana.store.com',
       name: nameValue,
       description: descriptionValue,
     }));
