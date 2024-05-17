@@ -13,7 +13,7 @@ function Login() {
     const [credentials, setCredentials] = useState({
         email: '',
         password: '',
-        "domain": "www.store.com"
+        "domain": "www.narayana.store.com"
     });
     const [error, setError] = useState('');
 
