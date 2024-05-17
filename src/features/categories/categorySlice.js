@@ -6,13 +6,14 @@ export const fetchCategory = createAsyncThunk(
   'category/fetchByCategory',
   async (thunkAPI) => {
     const token = localStorage.getItem('token');
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const headers = {
       Authorization: `Bearer ${token}`,
       'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',
       'Content-Type': 'application/json',
     };
-    const response = await axios.get(`http://localhost:4001/api/categories`, {
+    const response = await axios.get(`${apiUrl}/categories`, {
       headers,
     });
     return response.data;
@@ -24,9 +25,10 @@ export const addCategory = createAsyncThunk(
   async (catPayload, thunkAPI) => {
     try {
       const token = localStorage.getItem('token');
+      const apiUrl = process.env.REACT_APP_API_URL;
 
       const response = await axios.post(
-        'http://localhost:4001/api/categories',
+        `${apiUrl}/categories`,
         { ...catPayload },
         {
           headers: {

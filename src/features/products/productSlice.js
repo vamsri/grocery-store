@@ -7,13 +7,15 @@ export const fetchProducts = createAsyncThunk(
   async (thunkAPI) => {
     try {
       const token = localStorage.getItem('token');
+      const apiUrl = process.env.REACT_APP_API_URL;
+
       const headers = {
         Authorization: `Bearer ${token}`,
         'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',
         'Content-Type': 'application/json',
       };
 
-      const response = await axios.get('http://localhost:4001/api/products', {
+      const response = await axios.get(`${apiUrl}/products`, {
         headers,
       });
       return response.data;
@@ -38,12 +40,14 @@ export const createProducts = createAsyncThunk(
         productStock,
       } = prodPayload;
       const token = localStorage.getItem('token');
+      const apiUrl = process.env.REACT_APP_API_URL;
+
       const headers = {
         Authorization: `Bearer ${token}`,
         'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',
       };
       const response = await axios.post(
-        'http://localhost:4001/api/products',
+        `${apiUrl}/products`,
         {
           name: productName,
           price: productPrice,

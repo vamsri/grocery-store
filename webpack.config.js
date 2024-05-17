@@ -7,14 +7,20 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin'); // Optimize 
 const TerserPlugin = require('terser-webpack-plugin'); // Minify JavaScript
 const ESLintPlugin = require('eslint-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-
 const dotenv = require('dotenv');
 
-module.exports = (env, argv) => {
-    const isProduction = argv.mode === 'production';
+// Load environment variables from .env file
+const env = dotenv.config().parsed;
 
-    const envPath = isProduction ? './.env.production' : './.env.local';
-    dotenv.config({ path: envPath });
+// Create an object to be used in DefinePlugin
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  console.log('env->', env);
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
+
+module.exports = (env, argv) => {
+    const isProduction = process.env.NODE_ENV === 'production';
 
     const plugins = [];
     if (!isProduction) {
@@ -92,6 +98,7 @@ module.exports = (env, argv) => {
                 fix: true, // Automatically fix some issues
                 cache: true, // Enable caching for faster rebuilds
             }),
+            new webpack.DefinePlugin(envKeys),
         ].filter(Boolean),
         optimization: {
             minimize: isProduction,

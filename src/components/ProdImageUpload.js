@@ -16,6 +16,7 @@ const ProdImageUpload = ({prodId}) => {
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [category, setCategory] = useState([]);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -26,7 +27,7 @@ const ProdImageUpload = ({prodId}) => {
     };
     handleScroll(true);
     axios
-      .get(`http://localhost:4001/api/products/${prodId}`, {headers})
+      .get(`${apiUrl}/products/${prodId}`, {headers})
       .then((response) => {
         if (response.data) {     
           const {images} = response.data;
@@ -60,7 +61,7 @@ const ProdImageUpload = ({prodId}) => {
 
     try {
       handleScroll(true);
-      const response = await axios.post(`http://localhost:4001/api/products/${prodId}/upload`, formData, {
+      const response = await axios.post(`${apiUrl}/products/${prodId}/upload`, formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',

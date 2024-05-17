@@ -7,6 +7,8 @@ const CatImageUpload = ({catId}) => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [category, setCategory] = useState([]);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     const headers = {
@@ -15,7 +17,7 @@ const CatImageUpload = ({catId}) => {
       'Content-Type': 'application/json'
     };
     axios
-      .get(`http://localhost:4001/api/categories/${catId}`, {headers})
+      .get(`${apiUrl}/categories/${catId}`, {headers})
       .then((response) => {
         if (response.data) {          
           const {images} = response.data;
@@ -46,7 +48,7 @@ const CatImageUpload = ({catId}) => {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await axios.post(`http://localhost:4001/api/categories/${catId}/upload`, formData, {
+      const response = await axios.post(`${apiUrl}/categories/${catId}/upload`, formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'X-Tenant-ID': '661a6b052ce9f34f30fb9d1a',

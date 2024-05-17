@@ -27,8 +27,9 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const apiUrl = process.env.REACT_APP_API_URL;
         try {
-            const response = await axios.post('http://15.206.168.159/api/login', credentials);
+            const response = await axios.post(`${apiUrl}/login`, credentials);
             const { token } = response.data;
             localStorage.setItem('token', token);
             dispatch(onLoginSuccess());  // You might want to do something on successful login
