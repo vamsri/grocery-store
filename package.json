@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
+    "@vamsridhar/sharabha-store": "1.1.2",
     "ag-grid-community": "^31.2.0",
     "ag-grid-react": "^31.2.0",
     "axios": "^1.6.8",
