@@ -6,7 +6,7 @@ import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
 import { useNavigate } from 'react-router-dom';
 import DotLoader from "react-spinners/DotLoader";
 import { TrashIcon } from '@heroicons/react/20/solid';
-import { fetchCategory, addCategory} from './../features/categories/categorySlice';
+import { fetchCategory } from './../features/categories/categorySlice';
 import { useForm} from "react-hook-form";
 
 import 'ag-grid-community/styles/ag-grid.css'; // Mandatory CSS required by the grid
@@ -75,21 +75,6 @@ const CategoryForm = ({onSubmit}) => {
     getCategories();
   }, []);
 
-  const onSubmitFn = (data) => {
-
-    // Extract name and description from event
-    const { name, description } = data;
-    const nameValue = name;
-    const descriptionValue = description;
-    onSubmit(data);
-    dispatch(addCategory({
-      domain: 'www.narayana.store.com',
-      name: nameValue,
-      description: descriptionValue,
-    }));
-    
-  };
-
   const onRowClicked = (event) => {
     console.log('event->', event)
     navigate(`/category/${event.data._id}`); 
@@ -100,7 +85,7 @@ const CategoryForm = ({onSubmit}) => {
       <div className="w-128 h-128 bg-white border-2 mb-2">    
         <h1 className="bg-cyan-200 w-full mx-auto p-2">Categories</h1>
 
-        <form onSubmit={handleSubmit(onSubmitFn)} className="w-full h-2/5 space-y-4 p-2">      
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full h-2/5 space-y-4 p-2">      
           <div>
             <label htmlFor="name" className="block font-medium text-gray-700">
               <span className="text-red-500">{'*'}</span>Category:

@@ -49,7 +49,7 @@ describe('CategoryComponent', () => {
 
   it('allows user to input category and description and submit the form', async () => {
     const handleSubmit = jest.fn();
-    renderWithProviders(<CategoryComponent onSubmit={handleSubmit} />, {
+    const { getByText, getByRole } = renderWithProviders(<CategoryComponent onSubmit={handleSubmit} />, {
       initialState: {
         categories: {
           entities: [],
@@ -67,7 +67,7 @@ describe('CategoryComponent', () => {
       expect(handleSubmit).toHaveBeenCalledWith({
         name: 'Test Category',
         description: 'Test Description',
-      });
+      }, expect.any(Object));
     });
 
     // Ensure inputs are cleared after submission
