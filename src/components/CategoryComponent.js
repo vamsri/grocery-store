@@ -20,12 +20,10 @@ const override = {
 
 export const Error = (msg) => (<div className='text-red-400 text-left'>{msg}</div>);
 
-const CategoryForm = () => {
+const CategoryForm = ({onSubmit}) => {
   // Replace useHistory with useNavigate
   const navigate = useNavigate();  
   const dispatch = useDispatch();
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
   const [colDefs, setColDefs] = useState();
   const categories = useSelector(state => state.categories.entities);
   const loading = useSelector(state => state.categories.loading);
@@ -77,13 +75,13 @@ const CategoryForm = () => {
     getCategories();
   }, []);
 
-  const onSubmit = (data) => {
+  const onSubmitFn = (data) => {
 
     // Extract name and description from event
     const { name, description } = data;
     const nameValue = name;
     const descriptionValue = description;
-
+    onSubmit(data);
     dispatch(addCategory({
       domain: 'www.narayana.store.com',
       name: nameValue,
@@ -102,10 +100,10 @@ const CategoryForm = () => {
       <div className="w-128 h-128 bg-white border-2 mb-2">    
         <h1 className="bg-cyan-200 w-full mx-auto p-2">Categories</h1>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full h-2/5 space-y-4 p-2">      
+        <form onSubmit={handleSubmit(onSubmitFn)} className="w-full h-2/5 space-y-4 p-2">      
           <div>
             <label htmlFor="name" className="block font-medium text-gray-700">
-              <span className="text-red-500">{'*'}</span>Name:
+              <span className="text-red-500">{'*'}</span>Category:
             </label>
             <input
               type="text"
