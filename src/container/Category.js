@@ -11,13 +11,15 @@ function Category() {
 
   const onSubmit = (data) => {
     // Extract name and description from event
-    const { name, description } = data;
+    console.log('data->', data)
+    const { name, description, parentCategoryId } = data;
     const nameValue = name;
     const descriptionValue = description;
     dispatch(addCategory({
       domain: 'www.narayana.store.com',
       name: nameValue,
       description: descriptionValue,
+      parentCategoryId: parentCategoryId
     }));    
   };
 

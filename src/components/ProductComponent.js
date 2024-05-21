@@ -23,7 +23,7 @@ const override = {
 const ProductPage = () => {
     const navigate = useNavigate();  // Replace useHistory with useNavigate    
     const dispatch = useDispatch();
-    const {register, handleSubmit, formState: {errors, touchedFields }} = useForm()
+    const { register, handleSubmit, formState: { errors, touchedFields } } = useForm()
 
     const productLoading = useSelector(state => state.products.loading);
     const productEntity = useSelector(state => state.products.entities);
@@ -89,7 +89,7 @@ const ProductPage = () => {
         dispatch(fetchProducts());
     };
     const onSubmit = async (data) => {
-        const { username, price, description, stock } = data;      
+        const { username, price, description, stock } = data;
 
         // Extract the name, price, description, and stock from the event
         const productName = username;
@@ -103,7 +103,7 @@ const ProductPage = () => {
             productDescription,
             id: category._id,
             productStock
-        }));        
+        }));
     };
 
     return (
@@ -117,10 +117,10 @@ const ProductPage = () => {
                             className={`${errors.username && touchedFields.username ? 'border-2 border-red-300' : 'border-2 border-gray-300'} rounded px-3 py-2 w-3/4`}
                             autoComplete="off"
                             placeholder="Enter username..."
-                            {...register('username', {required: true})}
+                            {...register('username', { required: true })}
                         />
-                    </div>    
-                    {errors.username && touchedFields.username && Error('Username is required')}                
+                    </div>
+                    {errors.username && touchedFields.username && Error('Username is required')}
                     <div className="mb-2 flex justify-end items-center">
                         <label htmlFor="price" className="block font-medium mb-1 w-1/4"><span className="text-red-500">{'*'}</span>Price:</label>
                         <input
@@ -128,9 +128,9 @@ const ProductPage = () => {
                             id="price"
                             className={`${errors.price && touchedFields.price ? 'border-2 border-red-300' : 'border-2 border-gray-300'} rounded px-3 py-2 w-3/4`}
                             placeholder="Enter Price..."
-                            {...register('price', {required: true})}
+                            {...register('price', { required: true })}
                         />
-                        
+
                     </div>
                     {errors.price && touchedFields.price && Error('Price is required')}
                     <div className="mb-2 flex justify-end items-center">
@@ -139,9 +139,9 @@ const ProductPage = () => {
                             id="description"
                             className={`${errors.description && touchedFields.description ? 'border-2 border-red-300' : 'border-2 border-gray-300'} rounded px-3 py-2 w-3/4`}
                             placeholder="Enter Description..."
-                            {...register('description', {required: true})}
+                            {...register('description', { required: true })}
                         ></textarea>
-                        
+
                     </div>
                     {errors.description && touchedFields.description && Error('Description is required')}
                     <div className="mb-2 flex justify-end items-center">
@@ -167,15 +167,15 @@ const ProductPage = () => {
                             id="stock"
                             className={`${errors.stock && touchedFields.stock ? 'border-2 border-red-300' : 'border-2 border-gray-300'} rounded px-3 py-2 w-3/4`}
                             placeholder="Enter Stock..."
-                            {...register('stock', {required: true})}
+                            {...register('stock', { required: true })}
                         />
                     </div>
                     {errors.stock && touchedFields.stock && Error('Stock is required')}
                     <div className={"flex justify-end"}>
-            <button className={'w-1/4 m-2 p-1 bg-cyan-400 rounded tracking-wider text-white'}>
-            Submit
-            </button>
-        </div>
+                        <button className={'w-1/4 m-2 p-1 bg-cyan-400 rounded tracking-wider text-white'}>
+                            Submit
+                        </button>
+                    </div>
                 </form>
             </div>
             <ToastContainer />
